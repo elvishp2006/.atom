@@ -1,0 +1,29 @@
+"*":
+  welcome:
+    showOnStartup: false
+  editor:
+    fontSize: 16
+    invisibles: {}
+    tabLength: 4
+    showInvisibles: true
+  core:
+    projectHome: "/var/www/html"
+  emmet: {}
+  "highlight-selected":
+    hideHighlightOnSelectedWord: true
+  "file-icons": {}
+  whitespace:
+    ignoreWhitespaceOnCurrentLine: false
+    ensureSingleTrailingNewline: false
+  "tree-view": {}
+  tabs:
+    usePreviewTabs: true
+    tabScrolling: false
+  "project-quick-open":
+    openProjectsInSameWindow: true
+    projectPaths: "/var/www/html"
+  docblockr:
+    development_mode: true
+    extra_tags: [
+      "@since ${1:[version]}"
+    ]
