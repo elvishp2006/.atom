@@ -2,10 +2,10 @@
   welcome:
     showOnStartup: false
   editor:
-    fontSize: 16
     invisibles: {}
     tabLength: 4
     showInvisibles: true
+    fontSize: 15
   core:
     projectHome: "/var/www/html"
   emmet: {}
@@ -27,3 +27,5 @@
     extra_tags: [
       "@since ${1:[version]}"
     ]
+  linter:
+    showErrorPanel: false
