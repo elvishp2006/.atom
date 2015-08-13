@@ -1,5 +1,5 @@
 # Atom
-## Configurações e pacotes do editor Atom.
+## Configurações e pacotes do editor de texto Atom.
 Obs.: Feche o atom antes de executar os comandos.
 
 ```shell
