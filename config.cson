@@ -5,13 +5,13 @@
     invisibles: {}
     tabLength: 4
     showInvisibles: true
-    fontSize: 15
   core:
     projectHome: "/var/www/html"
   emmet: {}
   "highlight-selected":
     hideHighlightOnSelectedWord: true
-  "file-icons": {}
+  "file-icons":
+    coloured: false
   whitespace:
     ignoreWhitespaceOnCurrentLine: false
     ensureSingleTrailingNewline: false
@@ -29,3 +29,8 @@
     ]
   linter:
     showErrorPanel: false
+  "git-plus": {}
+  "atom-trello":
+    devKey: "9f21490c2ca6f61050b14b0d216b5a86"
+    token: "569f45a7bb31a1cec24c1387c5d9823939d6cc131c422f305b2b9484e4272f7f"
+  "grunt-runner": {}
