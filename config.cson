@@ -5,7 +5,7 @@
     invisibles: {}
     tabLength: 4
     showInvisibles: true
-    fontSize: 12
+    fontSize: 11
   core:
     projectHome: "/var/www/html"
   emmet: {}

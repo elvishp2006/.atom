@@ -50,10 +50,11 @@ module.exports =
       default: true
       description: 'Allow commands to open new panes'
     splitPane:
-      title: 'Split pane direction (up, right, down, or left)'
+      title: 'Split pane direction'
       type: 'string'
-      default: 'right'
-      description: 'Where should new panes go? (Defaults to right)'
+      default: 'Right'
+      description: 'Where should new panes go? (Defaults to Right)'
+      enum: ['Up', 'Right', 'Down', 'Left']
     wordDiff:
       type: 'boolean'
       default: true
@@ -70,6 +71,11 @@ module.exports =
       type: 'integer'
       default: 5
       description: 'How long should success/error messages be shown?'
+    pullBeforePush:
+      description: 'Pull from remote before pushing'
+      type: 'string'
+      default: 'no'
+      enum: ['no', 'pull', 'pull --rebase']
 
   subscriptions: null
 
@@ -95,7 +101,7 @@ module.exports =
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:delete-local-branch', -> git.getRepo().then((repo) -> GitDeleteLocalBranch(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:delete-remote-branch', -> git.getRepo().then((repo) -> GitDeleteRemoteBranch(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:cherry-pick', -> git.getRepo().then((repo) -> GitCherryPick(repo))
-    @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:diff', -> git.getRepo().then((repo) -> GitDiff(repo))
+    @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:diff', -> git.getRepo().then((repo) -> GitDiff(repo, file: currentFile(repo)))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:difftool', -> git.getRepo().then((repo) -> GitDifftool(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:diff-all', -> git.getRepo().then((repo) -> GitDiffAll(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:fetch', -> git.getRepo().then((repo) -> GitFetch(repo))
@@ -120,6 +126,7 @@ module.exports =
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:tags', -> git.getRepo().then((repo) -> GitTags(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:run', -> git.getRepo().then((repo) -> new GitRun(repo))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:merge', -> git.getRepo().then((repo) -> GitMerge(repo))
+    @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:merge-remote', -> git.getRepo().then((repo) -> GitMerge(repo, remote: true))
     @subscriptions.add atom.commands.add 'atom-workspace', 'git-plus:rebase', -> git.getRepo().then((repo) -> GitRebase(repo))
 
   deactivate: ->
@@ -147,5 +154,5 @@ module.exports =
     statusBar.getRightTiles().some ({item}) =>
       if item?.classList?.contains? 'git-view'
         @subscriptions.add $(item).find('.git-branch').on 'click', (e) ->
-          atom.commands.dispatch(document.querySelector('atom-text-editor'), 'git-plus:checkout')
+          atom.commands.dispatch(document.querySelector('atom-workspace'), 'git-plus:checkout')
         return true

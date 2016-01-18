@@ -5,9 +5,10 @@ RepoListView = require './views/repo-list-view'
 notifier = require './notifier'
 
 gitUntrackedFiles = (repo, dataUnstaged=[]) ->
-  args = ['ls-files', '-o', '--exclude-standard','-z']
+  args = ['ls-files', '-o', '--exclude-standard']
   git.cmd(args, cwd: repo.getWorkingDirectory())
-  .then (data) -> dataUnstaged.concat(_prettifyUntracked(data))
+  .then (data) ->
+    dataUnstaged.concat(_prettifyUntracked(data))
 
 _prettify = (data) ->
   return [] if data is ''
@@ -20,7 +21,7 @@ _prettify = (data) ->
 
 _prettifyUntracked = (data) ->
   return [] if data is ''
-  data = data.split(/\n/)
+  data = data.split(/\n/).filter (d) -> d isnt ''
   data.map (file) -> {mode: '?', path: file}
 
 _prettifyDiff = (data) ->
@@ -43,7 +44,7 @@ getRepoForCurrentFile = ->
       reject "no current file"
 
 module.exports = git =
-  cmd: (args, options={}) ->
+  cmd: (args, options={ env: process.env }) ->
     new Promise (resolve, reject) ->
       output = ''
       try
@@ -52,17 +53,21 @@ module.exports = git =
           args: args
           options: options
           stdout: (data) -> output += data.toString()
-          stderr: (data) -> reject data.toString()
-          exit: (code) -> resolve output
+          stderr: (data) -> 
+            output += data.toString()
+          exit: (code) -> 
+            if code is 0
+              resolve output 
+            else 
+              reject output 
       catch
         notifier.addError 'Git Plus is unable to locate the git command. Please ensure process.env.PATH can access git.'
         reject "Couldn't find git"
 
   getConfig: (setting, workingDirectory=null) ->
-    if workingDirectory?
-      git.cmd ['config', '--get', setting], cwd: workingDirectory
-    else
-      git.cmd ['config', '--get', setting], cwd: Path.get('~')
+    workingDirectory ?= Path.get('~')
+    git.cmd(['config', '--get', setting], cwd: workingDirectory).catch (error) ->
+      if error? and error isnt '' then notifier.addError error else ''
 
   reset: (repo) ->
     git.cmd(['reset', 'HEAD'], cwd: repo.getWorkingDirectory()).then () -> notifier.addSuccess 'All changes unstaged'
