@@ -2,7 +2,7 @@
   "name": "emmet",
   "description": "Emmet – the essential tool for web developers",
   "main": "./lib/emmet",
-  "version": "2.3.18",
+  "version": "2.4.1",
   "dependencies": {
     "emmet": "^1.3.2",
     "atom-space-pen-views": "^2.0.3"
@@ -21,10 +21,10 @@
     "url": "https://github.com/emmetio/emmet-atom/issues"
   },
   "homepage": "https://github.com/emmetio/emmet-atom#readme",
-  "_id": "emmet@2.3.18",
-  "_shasum": "3042cfd87d6f47f27b25dee3f88686271eae4e91",
-  "_resolved": "file:../d-116018-16631-7jnd85/package.tgz",
-  "_from": "../d-116018-16631-7jnd85/package.tgz",
+  "_id": "emmet@2.4.1",
+  "_shasum": "560c9c8eebe226be3acf54f1a676a15bc089b5e4",
+  "_resolved": "file:../d-116022-4344-t1oh30/package.tgz",
+  "_from": "../d-116022-4344-t1oh30/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
