@@ -10,7 +10,7 @@
       "@since ${1:[version]}"
     ]
   editor:
-    fontSize: 11
+    fontSize: 12
     invisibles: {}
     showInvisibles: true
     tabLength: 4
